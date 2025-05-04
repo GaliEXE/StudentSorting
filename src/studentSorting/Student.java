@@ -64,6 +64,11 @@ public class Student {
 		}
 		Collections.shuffle(rollNumbers);
 		
+		try {
+			
+		} catch (IllegalArgumentException e) {
+			
+		}
 		/**
 		 * User Inputs All Student Names and Addresses Here
 		 */
@@ -71,8 +76,16 @@ public class Student {
 			int studentID = rollNumbers.get(i);
 			System.out.println("Please Enter The Students Name: ");
 			String studentName = scnr.nextLine();
+			boolean nameValidation = isValidName(studentName);
+			if(nameValidation == false) {
+				throw new IllegalArgumentException("Invalid Name! Name Cannot Be Left Blank Or Include Numeric Or Special Characters");
+			}
 			System.out.println("Please Enter The Students Address: ");
 			String studentAdrs = scnr.nextLine();
+			boolean adrsValidation = isValidAddress(studentAdrs);
+			if(adrsValidation == false) {
+				throw new IllegalArgumentException("Invalid Address! Address Cannot Be Left Blank");
+			}
 			
 			Student newStudent = new Student(studentID, studentName, studentAdrs);
 			studentList.add(newStudent);
@@ -109,5 +122,28 @@ public class Student {
 				System.out.println("Invalid Command");
 			}	
 		}
+	}
+	/**
+	 * Will validate student name inputs to ensure that they do not contain special
+	 * characters or numbers and is not left blank!
+	 * @param studentName Student Name Input
+	 * @return true if valid name false if not a valid name
+	 */
+	public static boolean isValidName(String studentName) {
+			if(studentName == null || studentName.isEmpty()) {
+				return false;
+			}
+			if (!studentName.matches("[a-zA-Z\\s]+")) {
+				return false;
+			}
+			return true;
+	}
+	
+	public static boolean isValidAddress(String studentAdrs) {
+		if(studentAdrs == null || studentAdrs.isEmpty()) {
+			return false;
+		}
+		return true;
+		
 	}
 }
